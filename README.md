@@ -36,3 +36,4 @@ For swappping between the PID controllers and the effort controllers you can do 
 For using the Matlab Simulink files one must initialize the MATLAB with rosinit with that it connect to the robot
 
 
+In the case of the PERA the inertia and collision files works perfectly so it can be used for simulations but when it was designed by PHILIPS the mesh was empty so for visualization use the collision view. An update should be made to fix this but there is a lack of time in this project.
