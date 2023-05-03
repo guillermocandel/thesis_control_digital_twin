@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+	 <!-- Include materials -->
+ 
+    
+     <xacro:property name="deg_to_rad" value="0.01745329251994329577"/>
+
+
+
+  <!-- Constants -->
+  <xacro:property name="M_SCALE_CM" value="0.01"/> 
+  <xacro:property name="M_PI" value="3.14159"/>
+
+  <!-- Base properties -->
+  <xacro:property name="base_height" value="0.1" />
+  <xacro:property name="base_width" value="0.1" />
+
+
+  <!-- Axis_2 Fixed Angles-->
+  <xacro:property name="axis_2_height" value="0.343" />
+  <xacro:property name="axis_2_radius" value="${0.01}" />
+
+
+  <!-- Axis_3 Shoulder_Rotation -->
+  <xacro:property name="axis_3_height" value="${0.267}" />
+
+  <!-- Axis_4_Forearm_rotation-->
+  <xacro:property name="axis_4_height" value="${1.5}" />
+  
+
+  <!-- Axis_5 Wrist rotation-->
+  <xacro:property name="axis_5_height" value="${1.5}" />
+  
+  <xacro:macro name="inertial_box" params="mass x y z *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12) * mass * (y*y+z*z)}" ixy="0.0" ixz="0.0"
+                    iyy="${(1/12) * mass * (x*x+z*z)}" iyz="0.0"
+                    izz="${(1/12) * mass * (x*x+y*y)}" />
+        </inertial>
+    </xacro:macro>
+ 
+ 
+    <xacro:macro name="inertial_cylinder" params="mass length radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(1/12)*mass*(3*radius*radius+length*length)}" 				ixy="0.0" ixz="0.0"
+                    iyy="${(1/12)*mass*(3*radius*radius+length*length)}" 				iyz="0.0"
+                    izz="${(1/12)*mass*(radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+
+     <xacro:macro name="inertial_sphere" params="mass radius *origin">
+        <inertial>
+            <xacro:insert_block name="origin"/>
+            <mass value="${mass}" />
+            <inertia ixx="${(2/5) * mass * (radius*radius)}" ixy="0.0" ixz="0.0"
+                    iyy="${(2/5) * mass * (radius*radius)}" iyz="0.0"
+                    izz="${(2/5) * mass * (radius*radius)}" />
+        </inertial>
+    </xacro:macro>
+
+<!-- Max effort 2 not wokring check  -->
+  <xacro:property name="max_rads" value="10.157816"/>
+  <xacro:property name="max_effort_2" value="17"/> 
+
+  
+   <xacro:macro name="joint_revolute_z" params="joint_name parent_link child_link *origin">
+        <joint name ="${joint_name}" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit effort="15" velocity="${max_rads}" lower="-1.57" 					upper="1.57"/>
+        <parent link ="${parent_link}"/>
+    	<child link ="${child_link}"/>
+        <xacro:insert_block name="origin"/>
+  	</joint>
+   </xacro:macro>
+    
+   <xacro:macro name="joint_revolute_y" params="joint_name parent_link child_link  *origin">
+        <joint name = "${joint_name}" type= "revolute">
+        <axis xyz="0 1 0" />
+        <dynamics damping ="1" friction="2"/>
+        <limit effort="50" velocity="${max_rads}" lower="${-150*deg_to_rad}" 				upper="${150*deg_to_rad}"/>
+        <parent link="${parent_link}"/>
+    	<child link="${child_link}"/>
+            <xacro:insert_block name="origin"/>	
+    </joint>
+    </xacro:macro>
+    
+    
+     <xacro:macro name="cylinder_visual_collision_white" params="radius length  				*origin">
+       <visual>
+             <xacro:insert_block name="origin"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+            <material name="White"/>
+        </visual>
+        <collision>
+             <xacro:insert_block name="origin"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </collision>
+    </xacro:macro>
+    
+      <xacro:macro name="cylinder_visual_collision_red" params="radius length  				*origin">
+       <visual>
+             <xacro:insert_block name="origin"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+            <material name="Red"/>
+        </visual>
+        <collision>
+             <xacro:insert_block name="origin"/>
+            <geometry>
+                <cylinder radius="${radius}" length="${length}"/>
+            </geometry>
+        </collision>
+    </xacro:macro>
+    <xacro:macro name="transmission" params= "joint_name">
+     <transmission name="trans_${joint_name}">
+  		<type>transmission_interface/SimpleTransmission</type>
+     		<joint name="${joint_name}">
+        		<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      		</joint>
+      		<actuator name="motor_${joint_name}">
+        		<hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        		<mechanicalReduction>1</mechanicalReduction>
+      		</actuator>
+    	</transmission>
+   </xacro:macro>
+    
+ </robot>

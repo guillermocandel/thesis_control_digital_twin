@@ -1,0 +1,70 @@
+material amigo_description/aluminium
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture aluminum/aluminium_0001_c.jpg
+			}
+		}
+	}
+}
+material amigo_description/bottomcovers
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture bottomcovers/finalreduced.jpg
+			}
+		}
+	}
+}
+material amigo_description/logo
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture logo/tue.jpg
+			}
+		}
+	}
+}
+material amigo_description/orange
+{
+    receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture orange/orange.jpg
+			}
+		}
+	}
+}
+material amigo_description/white
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture white/white.jpg
+			}
+		}
+	}
+}

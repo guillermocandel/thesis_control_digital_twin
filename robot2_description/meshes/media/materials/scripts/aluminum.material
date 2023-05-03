@@ -1,0 +1,14 @@
+material amigo_description/aluminum
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture aluminum/aluminium_0001_c.jpg
+			}
+		}
+	}
+}

@@ -1,0 +1,14 @@
+material amigo_description/logo
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture logo/tue.jpg
+			}
+		}
+	}
+}
