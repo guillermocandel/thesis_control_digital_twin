@@ -1,0 +1,3 @@
+rostopic pub -1 /robot2/joint3_position_controller/command std_msgs/Float64 -- -2.43
+rostopic pub -1 /robot2/joint2_position_controller/command std_msgs/Float64 -- 0.32
+
