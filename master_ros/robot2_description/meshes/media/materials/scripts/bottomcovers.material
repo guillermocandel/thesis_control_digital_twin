@@ -1,0 +1,14 @@
+material amigo_description/bottomcovers
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture bottomcovers/finalreduced.jpg
+			}
+		}
+	}
+}

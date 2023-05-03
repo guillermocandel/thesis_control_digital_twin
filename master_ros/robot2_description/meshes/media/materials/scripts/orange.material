@@ -1,0 +1,14 @@
+material amigo_description/orange
+{
+    receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture orange/orange.jpg
+			}
+		}
+	}
+}

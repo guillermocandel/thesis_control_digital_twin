@@ -1,0 +1,131 @@
+<?xml version="1.0" ?>
+<robot name="SDOF" xmlns:xacro="http://ros.org/wiki/xacro">
+ <xacro:include filename="$(find robot2_description)/urdf/robot2_2.xacro" />
+	 <link name="world">
+	 </link>
+	 
+	 <joint name="bottom_joint" type="fixed">
+	     <origin xyz="0 0 0" rpy="0 0 0" />
+	    <parent link="world"/>
+	    <child link="base"/>
+	  </joint>
+	  
+	      
+   	<gazebo reference="base_link">
+    		<material>Gazebo/Black</material>
+  	</gazebo>
+  
+  
+	<link name="base">
+	<visual>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>
+	<mesh filename="package://robot2_description/meshes/base_visual.stl"/>
+	</geometry>
+	<material name="base_material">
+	<color rgba="0.62352941176470588758 0.66666666666666662966 0.70196078431372543882 1.0"/>
+	</material>
+	</visual>
+	<collision>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>
+	<mesh filename="package://robot2_description/meshes/base_collision.stl"/>
+	</geometry>
+	</collision>
+	<inertial>
+	<origin xyz="-8.5021145016461741051e-05 0.058778785998037819116 0.039600060500422355758" rpy="0 0 0"/>
+	<mass value="7.2066381775698191703" />
+	<inertia ixx="0.1848510767894367135" ixy="4.5691022906607363266e-05"  ixz="-4.0746026562791975412e-06" iyy="0.1343932608549686103" iyz="-0.031252351034649690498" izz="0.26718670184450998839" />
+	</inertial>
+	</link>
+
+	<link name="arm_link1">
+	<visual>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>
+	<mesh filename="package://robot2_description/meshes/arm_link1_visual.stl"/>
+	</geometry>
+	<material name="arm_link1_material">
+	<color rgba="0 0 0 1.0"/>
+	</material>
+	</visual>
+	<collision>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>
+	<mesh filename="package://robot2_description/meshes/arm_link1_collision.stl"/>
+	</geometry>
+	</collision>
+	<inertial>
+	<origin xyz="-0.00045109081390297465879 0.156201263484157582 -0.061677112247344179075" rpy="0 0 0"/>
+	<mass value="1.4999999999999995559" />
+	<inertia ixx="0.038537421102185387412" ixy="0.00012646598414354587531"  ixz="5.8850036257577947895e-05" iyy="0.0041886319586759658204" iyz="-0.0051423976908458804425" izz="0.036047505575906427233" />
+	</inertial>
+	</link>
+
+	<link name="arm_link2">
+	<visual>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>//mrm_description/meshes/
+	<mesh filename="package://robot2_description/meshes/arm_link2_visual.stl"/>
+	</geometry>
+	<material name="arm_link2_material">
+	<color rgba="0.65098039215686276382 0.48627450980392161739 0.019607843137254901689 1.0"/>
+	</material>
+	</visual>
+	<collision>
+	<origin xyz="0 0 0" rpy="0 -0 0" />
+	<geometry>
+	<mesh filename="package://robot2_description/meshes/arm_link2_collision.stl"/>
+	</geometry>
+	</collision>
+	<inertial>
+	<origin xyz="-1.4364225730974966689e-16 0.058911397470120141495 -0.062719477942803858461" rpy="0 0 0"/>
+	<mass value="0.87300000000000099742" />
+	<inertia ixx="0.0089993884421236645943" ixy="6.8925176177649059502e-19"  ixz="6.7665144158966557959e-19" iyy="0.0016902567305589091644" iyz="-0.0011284435031555686661" izz="0.0086581277243874769228" />
+	</inertial>
+	</link>
+
+	<!--joint name="arm_joint1" type="revolute">
+	<origin xyz="0 0.13334999999999996856 0.089400000000000007239" rpy="3.141592653589793116 -0 0.0093385757735447421507" />
+	<parent link="base" />
+	<child link="arm_link1" />
+	<axis xyz="0 0 1"/>
+	<limit effort="100" velocity="20" />
+	<joint_properties friction="0.0"/>
+	</joint-->
+	
+	<xacro:joint_revolute_z joint_name="arm_joint1" parent_link ="base" 
+			child_link ="arm_link1">
+	 	<origin xyz="0 0.13334999999999996856 0.089400000000000007239" rpy="3.141592653589793116 -0 0.0093385757735447421507"/>
+	</xacro:joint_revolute_z>
+	
+	
+	<xacro:joint_revolute_z joint_name="arm_joint2" parent_link ="arm_link1" 
+			child_link ="arm_link2">
+	 	<origin xyz="2.5587171270657904643e-17 0.34300000000000002709 -0.014600000000000001865" rpy="0 -0 -8.0823828788377960904e-19"/>
+	</xacro:joint_revolute_z>
+	
+	<!--joint name="arm_joint2" type="revolute">
+	<origin xyz="2.5587171270657904643e-17 0.34300000000000002709 -0.014600000000000001865" rpy="0 -0 -8.0823828788377960904e-19" />
+	<parent link="arm_link1" />
+	<child link="arm_link2" />
+	<axis xyz="0 0 1"/>
+	<limit effort="100" velocity="20" />
+	<joint_properties friction="0.0"/>
+	</joint-->
+	
+
+	
+	<xacro:transmission joint_name="arm_joint1">
+		</xacro:transmission>
+	<xacro:transmission joint_name="arm_joint2">
+		</xacro:transmission>
+	<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+          <robotNamespace>/SDOF</robotNamespace>
+     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    </plugin>
+    </gazebo>
+    
+    
+</robot>

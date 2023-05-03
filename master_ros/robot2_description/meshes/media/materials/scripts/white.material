@@ -1,0 +1,14 @@
+material amigo_description/white
+{
+	receive_shadows on
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture white/white.jpg
+			}
+		}
+	}
+}
